@@ -829,8 +829,14 @@ class CompleteDialogueProcessor:
         self.build_comprehensive_mapping()
         
         # 3. 处理数据
+        import os
+        
+        # 创建output目录
+        if not os.path.exists("../output"):
+            os.makedirs("../output")
+        
         input_file = "WutheringDialog/data/dialogs_zh-Hans.split.jsonl"
-        output_file = "WutheringDialog/data/dialogs_zh-Hans.complete_final.jsonl"
+        output_file = "../output/dialogs_zh-Hans_complete.jsonl"
         
         self.process_dialogue_data(input_file, output_file)
         

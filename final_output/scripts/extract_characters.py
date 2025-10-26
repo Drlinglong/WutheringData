@@ -137,5 +137,10 @@ def process_characters_from_textmap(text_map_path, output_path):
 
 if __name__ == "__main__":
     text_map_file = "TextMap/zh-Hans/MultiText.json"
-    output_file = "WutheringDialog/data/rag_input.jsonl"
+    # 创建output目录
+    import os
+    if not os.path.exists("../output"):
+        os.makedirs("../output")
+    
+    output_file = "../output/characters.jsonl"
     process_characters_from_textmap(text_map_file, output_file)

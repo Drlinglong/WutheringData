@@ -67,5 +67,10 @@ def extract_achievements_individual(config_dir, text_map_path, output_path):
 if __name__ == "__main__":
     config_directory = "ConfigDB"
     text_map_file = "TextMap/zh-Hans/MultiText.json"
-    output_file = "WutheringDialog/data/achievements.jsonl"
+    # 创建output目录
+    import os
+    if not os.path.exists("../output"):
+        os.makedirs("../output")
+    
+    output_file = "../output/achievements.jsonl"
     extract_achievements_individual(config_directory, text_map_file, output_file)

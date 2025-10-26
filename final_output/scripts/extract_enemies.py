@@ -78,5 +78,10 @@ def extract_enemies(text_map_path, output_path):
 
 if __name__ == "__main__":
     text_map_file = "TextMap/zh-Hans/MultiText.json"
-    output_file = "WutheringDialog/data/enemies.jsonl"
+    # 创建output目录
+    import os
+    if not os.path.exists("../output"):
+        os.makedirs("../output")
+    
+    output_file = "../output/enemies.jsonl"
     extract_enemies(text_map_file, output_file)

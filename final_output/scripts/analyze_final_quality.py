@@ -7,7 +7,7 @@ from collections import defaultdict, Counter
 def analyze_final_quality():
     """分析最终数据质量"""
     
-    dialogue_file = "WutheringDialog/data/dialogs_zh-Hans.complete_final.jsonl"
+    dialogue_file = "../output/dialogs_zh-Hans_complete.jsonl"
     
     print("=== 最终数据质量分析 ===")
     
