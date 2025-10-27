@@ -34,6 +34,11 @@ class CompleteDialogueProcessor:
         ]
         
         # 全面的生态NPC对话分类（基于自动扫描结果）
+        # ⚠️ 为什么需要这么多手动分类？
+        # 因为游戏公司的flow_name设计极其混乱，没有任何统一规则
+        # 比如："剧情_七丘生态_NPC"、"中曲生态"、"NPC对话" 等等都是不同的命名风格
+        # 无法通过任何算法自动匹配，只能手动枚举
+        # 未来如有新的flow_name，运行 auto_scan_categories.py 扫描后手动添加
         self.ecological_categories = {
             # 瑝珑第二章生态对话
             '剧情_七丘生态_NPC': {'chapter': '瑝珑 第二章', 'section': '七丘生态对话'},
@@ -78,6 +83,7 @@ class CompleteDialogueProcessor:
         }
         
         # 角色任务对话的分类（基于自动扫描结果）
+        # 同上，也是手动枚举的无奈之举
         self.character_categories = {
             # 瑝珑第二章角色线
             '剧情_2_2_维奥拉角色线': {'chapter': '瑝珑 第二章', 'section': '维奥拉角色线'},
@@ -802,6 +808,12 @@ class CompleteDialogueProcessor:
         print(f"Side quest mappings found: {self.stats['side_quest_mapped']}")
         print(f"Special mappings found: {self.stats['special_mapped']}")
         
+        
+        # ⚠️ 数据结构预警：如果未来游戏更新添加了新的flow_name
+        # 1. 运行 auto_scan_categories.py 扫描所有唯一的flow_name
+        # 2. 手动将新的flow_name分类到对应的 _categories 字典中
+        # 3. 这是一个无奈的设计，因为游戏公司的数据结构没有统一规则
+        
         # 计算质量指标
         if self.stats['total_dialogues'] > 0:
             quest_name_rate = self.stats['quest_name_found'] / self.stats['total_dialogues'] * 100
@@ -829,14 +841,8 @@ class CompleteDialogueProcessor:
         self.build_comprehensive_mapping()
         
         # 3. 处理数据
-        import os
-        
-        # 创建output目录
-        if not os.path.exists("../output"):
-            os.makedirs("../output")
-        
         input_file = "WutheringDialog/data/dialogs_zh-Hans.split.jsonl"
-        output_file = "../output/dialogs_zh-Hans_complete.jsonl"
+        output_file = "WutheringDialog/data/dialogs_zh-Hans.complete_final.jsonl"
         
         self.process_dialogue_data(input_file, output_file)
         
